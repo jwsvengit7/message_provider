@@ -1,5 +1,6 @@
 package com.example.authmodule.messagin_quee.rabbitmq;
 
+import com.example.authmodule.domain.constant.QueueAmpq;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -14,8 +15,7 @@ import java.util.Map;
 
 @Configuration
 public class RabbitMQConfig {
-        @Value("${rabbitmq.name}")
-        public String QUEUE_NAME;
+
 
         @Value("${rabbitmq.exchange.name}")
         public String EXCHANGE_NAME;
@@ -25,7 +25,7 @@ public class RabbitMQConfig {
 
         @Bean
         public Queue queue() {
-                return new Queue(QUEUE_NAME, false);
+                return new Queue(QueueAmpq.OTP_EXCHNAGE.name(), false);
         }
 
         @Bean
@@ -54,8 +54,8 @@ public class RabbitMQConfig {
         public Queue retryQueue() {
                 Map<String, Object> args = new HashMap<>();
                 args.put("x-dead-letter-exchange", EXCHANGE_NAME);
-                args.put("x-dead-letter-routing-key", QUEUE_NAME);
+                args.put("x-dead-letter-routing-key", QueueAmpq.OTP_EXCHNAGE.name());
                 args.put("x-message-ttl", 5000);
-                return new Queue(QUEUE_NAME, false);
+                return new Queue(QueueAmpq.OTP_EXCHNAGE.name(), false);
         }
 }

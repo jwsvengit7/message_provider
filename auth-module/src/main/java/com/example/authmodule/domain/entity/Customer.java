@@ -24,4 +24,6 @@ public class Customer  {
     @Enumerated(EnumType.STRING)
     private Roles roles;
 
+
+
 }

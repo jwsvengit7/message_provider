@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
@@ -16,23 +17,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
-@Component
-@RequiredArgsConstructor
+@Service
 public class JwtService {
-
-    @Value("${jwt.expiration.access-token}")
-    private long access_expiration;
-    @Value("${jwt.expiration.refresh-token}")
+    @Value("${jwt.refresh-token}")
     private long refresh_expiration;
+
+    @Value("${jwt.access-token}")
+    private long access_expiration;
+
 
     @Value("${jwt.access_key}")
     private String access_key;
-    private String generateSecret(){
-        return access_key;
-    }
+
 
     private Key generateKey(){
-        byte[] secretKeyInBytes = DatatypeConverter.parseBase64Binary(generateSecret());
+        byte[] secretKeyInBytes = DatatypeConverter.parseBase64Binary(access_key);
         return new SecretKeySpec(secretKeyInBytes, "HmacSHA512");
     }
 

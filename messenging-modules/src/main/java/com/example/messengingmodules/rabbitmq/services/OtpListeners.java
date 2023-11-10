@@ -1,5 +1,6 @@
 package com.example.messengingmodules.rabbitmq.services;
 
+import com.example.messengingmodules.Queue.Rabbitmq;
 import com.example.messengingmodules.events.OtpEvents;
 import com.example.messengingmodules.rabbitmq.quee_request.OtpQueue;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class OtpListeners {
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @RabbitListener(queues ="OTP_QUEE")
+    @RabbitListener(queues = "OTP_QUEE")
     public void listeners(OtpQueue message) {
         sendMail(message);
     }
