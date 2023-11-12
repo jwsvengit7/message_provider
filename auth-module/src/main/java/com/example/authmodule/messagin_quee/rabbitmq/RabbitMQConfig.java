@@ -1,6 +1,8 @@
 package com.example.authmodule.messagin_quee.rabbitmq;
 
+import com.example.authmodule.domain.constant.Exchange;
 import com.example.authmodule.domain.constant.QueueAmpq;
+import com.example.authmodule.domain.constant.RoutingKey;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -15,24 +17,22 @@ import java.util.Map;
 
 @Configuration
 public class RabbitMQConfig {
-
-
-        @Value("${rabbitmq.exchange.name}")
-        public String EXCHANGE_NAME;
-
-        @Value("${rabbitmq.routing.key}")
-        public String ROUTING_KEY;
-
         @Bean
         public Queue queue() {
-                return new Queue(QueueAmpq.OTP_EXCHNAGE.name(), false);
+                return new Queue(QueueAmpq.OTP_QUEE.name(), true);
         }
-
+        @Bean
+        public Queue queueForProfile() {
+                return new Queue(QueueAmpq.PROFILE_ACCESS.name(), true);
+        }
         @Bean
         public DirectExchange exchange() {
-                return new DirectExchange(EXCHANGE_NAME);
+                return new DirectExchange(Exchange.OTP_EXCHANGE.name());
         }
-
+        @Bean
+        public DirectExchange exchangeProfile() {
+                return new DirectExchange(Exchange.PROFILE_ACCESS.name());
+        }
         @Bean
         public MessageConverter messageConverter() {
                 return new Jackson2JsonMessageConverter();
@@ -40,7 +40,11 @@ public class RabbitMQConfig {
 
         @Bean
         public Binding binding(Queue queue, DirectExchange exchange) {
-                return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
+                return BindingBuilder.bind(queue).to(exchange).with(RoutingKey.OTP_QUEE.name());
+        }
+        @Bean
+        public Binding bindingProfile(Queue queue, DirectExchange exchange) {
+                return BindingBuilder.bind(queue).to(exchange).with(RoutingKey.PROFILE_ACCESS.name());
         }
 
         @Bean
@@ -53,9 +57,16 @@ public class RabbitMQConfig {
         @Bean
         public Queue retryQueue() {
                 Map<String, Object> args = new HashMap<>();
-                args.put("x-dead-letter-exchange", EXCHANGE_NAME);
-                args.put("x-dead-letter-routing-key", QueueAmpq.OTP_EXCHNAGE.name());
+                args.put("x-dead-letter-exchange", Exchange.OTP_EXCHANGE.name());
+                args.put("x-dead-letter-routing-key", RoutingKey.OTP_QUEE.name());
                 args.put("x-message-ttl", 5000);
-                return new Queue(QueueAmpq.OTP_EXCHNAGE.name(), false);
+                return new Queue(QueueAmpq.OTP_QUEE.name(), true);
+        }
+        public Queue retryQueueProfile() {
+                Map<String, Object> args = new HashMap<>();
+                args.put("x-dead-letter-exchange", Exchange.PROFILE_ACCESS.name());
+                args.put("x-dead-letter-routing-key", RoutingKey.PROFILE_ACCESS.name());
+                args.put("x-message-ttl", 5000);
+                return new Queue(QueueAmpq.PROFILE_ACCESS.name(), true);
         }
 }

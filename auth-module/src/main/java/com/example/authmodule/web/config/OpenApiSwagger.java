@@ -23,10 +23,7 @@ import org.springframework.context.annotation.Configuration;
                         description = "DEV ENV",
                         url = "http://localhost:8082"
                 ),
-                @Server(
-                        description = "PROD ENV",
-                        url = "https://cardmonix-production.up.railway.app"
-                )
+
         },
         security = {
                 @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "Bearer Authentication")

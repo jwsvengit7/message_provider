@@ -1,4 +1,4 @@
-package com.example.authmodule.messagin_quee.rabbitmq.quee_request;
+package com.example.profilemodule.domain.dto;
 
 import lombok.*;
 

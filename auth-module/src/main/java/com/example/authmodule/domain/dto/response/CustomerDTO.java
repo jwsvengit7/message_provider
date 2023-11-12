@@ -12,7 +12,7 @@ import lombok.*;
 public class CustomerDTO {
     private Long id;
     private String email;
-    private String username;
+    private String fullname;
     private Registeration_Type type;
     private Roles roles;
     private boolean status;

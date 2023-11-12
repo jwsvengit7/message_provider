@@ -6,10 +6,8 @@ import com.example.authmodule.domain.dto.request.RegisterRequest;
 import com.example.authmodule.domain.dto.response.ApiResponse;
 import com.example.authmodule.domain.dto.response.RegisterResponse;
 import com.example.authmodule.domain.entity.Customer;
-import com.example.authmodule.domain.entity.OTP;
 import com.example.authmodule.domain.repository.values.interfaces.CustomerRepositoryValues;
 import com.example.authmodule.exceptions.CustomerNotFoundException;
-import com.example.authmodule.messagin_quee.rabbitmq.quee_request.OtpQueue;
 import com.example.authmodule.utils.OtpUtils;
 import com.example.authmodule.web.services.interfaces.OTPService;
 import com.example.authmodule.web.services.interfaces.RegisterService;
@@ -48,6 +46,7 @@ public class RegisterationImpl implements RegisterService {
                 .type(Registeration_Type.REGISTERATION_TYPE)
                 .password(passwordEncoder.encode(customer.getPassword()))
                 .roles(Roles.STAFF)
+                .fullname(customer.getFullname())
                 .status(false)
                 .build());
     }

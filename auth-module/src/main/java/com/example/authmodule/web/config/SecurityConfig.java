@@ -1,6 +1,7 @@
 package com.example.authmodule.web.config;
 
-import com.example.authmodule.security.JWTAuthFilter;
+
+import com.example.authmodule.security.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -11,12 +12,12 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
+@EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JWTAuthFilter jwtAuthFilter;
+    private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {

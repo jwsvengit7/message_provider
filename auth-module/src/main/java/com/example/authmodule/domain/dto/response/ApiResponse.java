@@ -13,16 +13,16 @@ import java.util.Date;
 @Getter
 @Setter
 public class ApiResponse<T,K> {
-    private T data;
-    private K dataK;
-    private String message;
-    public ApiResponse(K dataK,T data){
-        this.data=data;
-        this.dataK=dataK;
-        this.message = "Api recieved";
+    private T message;
+    private K payload;
+    private String message_response;
+    public ApiResponse(K payload,T message){
+        this.message=message;
+        this.payload=payload;
+        this.message_response = "Api recieved";
     }
-    public ApiResponse(T data){
-        this.data=data;
-        this.message = "Api recieved";
+    public ApiResponse(T message){
+        this.message=message;
+        this.message_response = "Api recieved";
     }
 }

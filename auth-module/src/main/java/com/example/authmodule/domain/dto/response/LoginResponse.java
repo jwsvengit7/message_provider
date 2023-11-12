@@ -11,7 +11,6 @@ import lombok.*;
 public class LoginResponse {
     private String message;
     private String email;
-    private Long phone;
     private String accessToken;
     private String refreshAccesstoken;
     private Roles roles;

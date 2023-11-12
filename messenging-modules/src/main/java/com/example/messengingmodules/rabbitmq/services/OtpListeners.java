@@ -21,7 +21,6 @@ public class OtpListeners {
     }
     private void sendMail(OtpQueue message){
         log.info("{} ", message);
-
         applicationEventPublisher.publishEvent(new OtpEvents(message));
     }
 }
