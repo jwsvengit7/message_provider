@@ -41,7 +41,4 @@ public class ProfileServiceImpl {
                 .identityNo(profileRequestQueue.getId())
                 .build();
     }
-
-
-
 }
