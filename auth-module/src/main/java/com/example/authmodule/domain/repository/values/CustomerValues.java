@@ -7,6 +7,7 @@ import com.example.authmodule.domain.entity.OTP;
 import com.example.authmodule.domain.repository.CustomerRepository;
 import com.example.authmodule.domain.repository.values.interfaces.CustomerRepositoryValues;
 import com.example.authmodule.domain.repository.values.interfaces.OTPRepositoryValues;
+import com.example.authmodule.exceptions.CustomerNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,11 @@ public  class CustomerValues implements CustomerRepositoryValues, OTPRepositoryV
     @Override
     public Optional<Customer> findByEmail(String email) {
         return customerRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<Customer> findByUserId(Long id) {
+        return customerRepository.findById(id);
     }
 
     @Override

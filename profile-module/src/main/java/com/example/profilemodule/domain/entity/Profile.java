@@ -4,7 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.annotation.Collation;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import java.util.*;
 @Getter
 @Setter
 @Document
@@ -21,6 +21,6 @@ public class Profile {
     private String email;
     private String dob;
     private Long bvn;
-    private AccountDetails accountDetails;
+    private List<AccountDetails> accountDetails;
 
 }

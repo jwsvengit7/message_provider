@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface CustomerRepositoryValues {
     Optional<Customer> findAllByRoles(Roles roles);
     Optional<Customer> findByEmail(String email);
+    Optional<Customer> findByUserId(Long id);
+
     Customer save(Customer customer);
     boolean isActive(String customer);
 }

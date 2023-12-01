@@ -23,8 +23,7 @@ public class ApiConfig implements GlobalFilter {
                     .then(Mono.fromRunnable(()->{
                         ServerHttpResponse response = exchange.getResponse();
                         logger.info("Post Filter "+ response.getStatusCode());
-                }))
-                ;
+                }));
     }
 
 }

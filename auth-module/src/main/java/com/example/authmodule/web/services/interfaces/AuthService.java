@@ -9,5 +9,6 @@ import com.example.authmodule.domain.dto.response.RegisterResponse;
 
 public interface AuthService {
     ApiResponse<String, LoginResponse> authLogin(LoginRequest loginRequest);
+    String findUserId(Long userid);
 
 }

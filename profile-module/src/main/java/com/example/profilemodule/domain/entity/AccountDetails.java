@@ -14,4 +14,10 @@ public class AccountDetails {
     private Long accountNumber;
     private String accountName;
     private String bankName;
+
+    public AccountDetails(String accountName, Long accountNumber, String bankName) {
+        this.accountName=accountName;
+        this.accountNumber=accountNumber;
+        this.bankName=bankName;
+    }
 }

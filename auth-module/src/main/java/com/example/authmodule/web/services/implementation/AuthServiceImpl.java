@@ -44,6 +44,13 @@ public class AuthServiceImpl implements AuthService {
         throw  new RuntimeException("Invalid Details");
     }
 
+    @Override
+    public String findUserId(Long userid) {
+        Customer customer = customerRepositoryValues.findByUserId(userid)
+                .orElseThrow(()-> new CustomerNotFoundException("CUSTOMER NOT FOUND"));
+        return customer.getEmail();
+    }
+
     private LoginResponse logginResponse(String jwt,String refreshToken,Customer customer){
 return LoginResponse.builder()
         .roles(customer.getRoles())
