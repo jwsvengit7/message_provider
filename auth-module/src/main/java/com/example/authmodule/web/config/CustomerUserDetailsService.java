@@ -3,6 +3,7 @@ package com.example.authmodule.web.config;
 import com.example.authmodule.domain.entity.Customer;
 import com.example.authmodule.domain.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,8 +26,10 @@ public class CustomerUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Customer customer = customerRepository.findByEmail(email)
                 .orElseThrow(()-> new UsernameNotFoundException("USER NOT FOUND"));
-        return new Customer(customer.getEmail(),customer.getPassword());
+        return new User(customer.getEmail(),customer.getPassword(),getAuthorities(customer));
     }
 
-
+    private Collection<? extends GrantedAuthority> getAuthorities(Customer user){
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRoles().name()));
+    }
 }

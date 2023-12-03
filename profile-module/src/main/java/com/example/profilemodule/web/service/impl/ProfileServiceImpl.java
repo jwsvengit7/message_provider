@@ -31,7 +31,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @RabbitListener(queues = "PROFILE_ACCESS")
     public void listeners(ProfileRequestQueue message) {
-        redisTemplate.opsForHash().put("message",message.getId(),message);
+//        redisTemplate.opsForHash().put("message",message.getId(),message);
         log.info("{}",message.toString());
         recievedProfileFromqueue(message);
     }

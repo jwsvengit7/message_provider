@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+
 public class AuthServiceImpl implements AuthService {
 
     private final CustomerRepositoryValues customerRepositoryValues;
@@ -36,8 +37,8 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(()->new CustomerNotFoundException("USER NOT FOUND"));
         if(customerRepositoryValues.isActive(customer.getEmail()) && passwordEncoder.matches(loginRequest.getPassword(),customer.getPassword())){
             Authentication authentication = new UsernamePasswordAuthenticationToken(customer.getEmail(),customer.getPassword());
-            String jwtToken = jwtService.generateToken(customer);
-            String refreshtoken = jwtService.generateRefreshToken(customer);
+            String jwtToken = jwtService.generateToken(authentication);
+            String refreshtoken = jwtService.generateRefreshToken(authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return new ApiResponse<>(logginResponse(jwtToken,refreshtoken,customer),Registeration_Type.LOGIN_TYPE.name());
         }

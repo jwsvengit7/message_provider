@@ -29,6 +29,9 @@ public class RegisterationImpl implements RegisterService {
 
     @Override
     public ApiResponse<String, RegisterResponse> authRegister(RegisterRequest registerRequest) {
+        if(String.valueOf(registerRequest.getEmail()).isEmpty()){
+            throw new CustomerNotFoundException("Empty Fied are not allowed");
+        }
         if(customerRepositoryValues.isActive(registerRequest.getEmail())){
             throw new CustomerNotFoundException("USER ALREADY EXIST");
         }

@@ -12,9 +12,9 @@ import reactor.core.publisher.Mono;
 
 
 @Configuration
-public class ApiConfig implements GlobalFilter {
+public class ApiGatewayConfig implements GlobalFilter {
 
-    Logger logger = LoggerFactory.getLogger(ApiConfig.class);
+    Logger logger = LoggerFactory.getLogger(ApiGatewayConfig.class);
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
         ServerHttpRequest serverHttpRequest = exchange.getRequest();

@@ -16,6 +16,4 @@ public interface ProfileService {
 
      Profile getProfile(Long identityNo);
 
-
-
 }
