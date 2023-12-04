@@ -3,7 +3,6 @@ package com.example.authmodule.web.config;
 
 import com.example.authmodule.security.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,8 +24,8 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity.authorizeHttpRequests(authorize ->
                 authorize.requestMatchers(
-                                "/api/auth/**",
-                                "/api/v1/**",
+                                "/api/v1/auth/**",
+                                "/api/v1/user/**",
                                 "/v2/api-docs",
                                 "/v3/api-docs",
                                 "/v3/api-docs/**",

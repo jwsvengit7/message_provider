@@ -1,4 +1,4 @@
-package com.example.authmodule.messagin_quee.rabbitmq.quee_request;
+package com.example.authmodule.messaging_quee.rabbitmq.queue_pjo;
 
 import lombok.*;
 

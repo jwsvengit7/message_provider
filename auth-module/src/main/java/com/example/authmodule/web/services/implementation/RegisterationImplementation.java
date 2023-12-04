@@ -13,15 +13,16 @@ import com.example.authmodule.web.services.interfaces.OTPService;
 import com.example.authmodule.web.services.interfaces.RegisterService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+import static com.example.authmodule.utils.Constant.*;
+
 @Service
 @RequiredArgsConstructor
-public class RegisterationImpl implements RegisterService {
+public class RegisterationImplementation implements RegisterService {
     private final CustomerRepositoryValues customerRepositoryValues;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
@@ -30,10 +31,10 @@ public class RegisterationImpl implements RegisterService {
     @Override
     public ApiResponse<String, RegisterResponse> authRegister(RegisterRequest registerRequest) {
         if(String.valueOf(registerRequest.getEmail()).isEmpty()){
-            throw new CustomerNotFoundException("Empty Fied are not allowed");
+            throw new CustomerNotFoundException(CUSTOMER_ERROR);
         }
         if(customerRepositoryValues.isActive(registerRequest.getEmail())){
-            throw new CustomerNotFoundException("USER ALREADY EXIST");
+            throw new CustomerNotFoundException(CUSTOMER_ALREADY_EXIST);
         }
         Customer saveCustomer = saveUser(registerRequest);
         String otp = OtpUtils.generateOtp();
