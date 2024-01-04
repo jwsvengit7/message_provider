@@ -7,5 +7,7 @@ import java.util.Optional;
 
 public interface ProfileRepository extends MongoRepository<Profile,String> {
     Optional<Profile> findByIdentityNo(Long identity);
+    Optional<Profile> findByEmail(String email);
+
 
 }
