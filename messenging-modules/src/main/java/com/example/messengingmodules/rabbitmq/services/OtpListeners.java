@@ -9,13 +9,15 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import static com.example.messengingmodules.utils.Utils.OTP_QUEUE;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class OtpListeners {
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @RabbitListener(queues = "OTP_QUEE")
+    @RabbitListener(queues = OTP_QUEUE)
     public void listeners(OtpQueue message) {
         sendMail(message);
     }
