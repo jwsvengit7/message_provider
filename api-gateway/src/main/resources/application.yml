@@ -16,19 +16,27 @@ spring:
         locator:
           enabled: false
           lower-case-service-id: true
+      routes:
+        - id: AUTH-MODULE
+          uri: lb://AUTH-MODULE
+          predicates:
+            - Path=/api/v1/auth/**
+        - id: PROFILE-MODULE
+          uri: lb://PROFILE-MODULE
+          predicates:
+            - Path=/api/profile/**
+
+  main:
+   allow-circular-references: true
 
 server:
   port: 9092
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
+jwtSecret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970ARN304N39FR3NRF44
 
-
-
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG # Example of setting the logging level for Spring Web classes to DEBUG
+    com.example.apigateway: DEBUG # Ex
 
