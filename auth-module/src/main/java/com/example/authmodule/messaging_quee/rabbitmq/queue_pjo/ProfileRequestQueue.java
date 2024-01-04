@@ -12,4 +12,14 @@ public class ProfileRequestQueue {
     private Long id;
     private String role;
     private String email;
+
+    @Override
+    public String toString() {
+        return "Profile Message{" +
+                "fullname='" + fullname + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role  + '\'' +
+                ", id="+id+  '\'' +
+                '}';
+    }
 }

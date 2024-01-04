@@ -1,6 +1,7 @@
 package com.example.authmodule.security;
 
 
+import com.example.authmodule.domain.constant.Roles;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -35,12 +36,13 @@ public class JwtService {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
-    public String generateToken(Authentication authentication) {
-        return buildToken(new HashMap<>(), authentication, jwtExpiration);
+    public String generateToken(Authentication authentication, Roles roles) {
+        final HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("role",roles.name());
+        hashMap.put("Company","SMS-PROVIDER");
+        return buildToken(hashMap, authentication, jwtExpiration);
     }
-    public String generateRefreshToken(
-            Authentication authentication
-    ) {
+    public String generateRefreshToken(Authentication authentication) {
         return buildToken(new HashMap<>(), authentication, refreshExpiration);
     }
     private String buildToken(Map<String, Object> extraClaims,Authentication authentication, long expiration) {

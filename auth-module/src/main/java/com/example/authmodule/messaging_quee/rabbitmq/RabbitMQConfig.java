@@ -53,19 +53,23 @@ public class RabbitMQConfig {
                 return rabbitTemplate;
         }
 
+
         @Bean
         public Queue retryQueue() {
                 Map<String, Object> args = new HashMap<>();
                 args.put("x-dead-letter-exchange", Exchange.OTP_EXCHANGE.name());
                 args.put("x-dead-letter-routing-key", RoutingKey.OTP_QUEE.name());
                 args.put("x-message-ttl", 5000);
-                return new Queue(QueueAmpq.OTP_QUEE.name(), true);
+                return new Queue(QueueAmpq.OTP_QUEE.name() + ".retry", true, false, false, args);
         }
+
+        @Bean
         public Queue retryQueueProfile() {
                 Map<String, Object> args = new HashMap<>();
                 args.put("x-dead-letter-exchange", Exchange.PROFILE_ACCESS.name());
                 args.put("x-dead-letter-routing-key", RoutingKey.PROFILE_ACCESS.name());
                 args.put("x-message-ttl", 5000);
-                return new Queue(QueueAmpq.PROFILE_ACCESS.name(), true);
+                return new Queue(QueueAmpq.PROFILE_ACCESS.name() + ".retry", true, false, false, args);
         }
+
 }

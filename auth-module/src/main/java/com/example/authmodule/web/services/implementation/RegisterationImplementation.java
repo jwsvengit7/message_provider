@@ -9,6 +9,7 @@ import com.example.authmodule.domain.entity.Customer;
 import com.example.authmodule.domain.repository.values.interfaces.CustomerRepositoryValues;
 import com.example.authmodule.exceptions.CustomerNotFoundException;
 import com.example.authmodule.utils.OtpUtils;
+import com.example.authmodule.web.config.annotation.InvokeDomain;
 import com.example.authmodule.web.services.interfaces.OTPService;
 import com.example.authmodule.web.services.interfaces.RegisterService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class RegisterationImplementation implements RegisterService {
     private final OTPService otpServicel;
 
     @Override
+    @InvokeDomain
     public ApiResponse<String, RegisterResponse> authRegister(RegisterRequest registerRequest) {
         if(String.valueOf(registerRequest.getEmail()).isEmpty()){
             throw new CustomerNotFoundException(CUSTOMER_ERROR);

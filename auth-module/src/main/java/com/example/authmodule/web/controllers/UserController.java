@@ -17,7 +17,8 @@ import static com.example.authmodule.utils.Constant.BASE_URL;
 @RestController
 @RequestMapping(BASE_URL+"user")
 @RequiredArgsConstructor
-@Tag(name = "User Service SMS SERVICE ",
+@Tag(
+        name = "User Service SMS SERVICE ",
         description = "User API For testing userdetails")
 public class UserController {
     private final AuthService authService;

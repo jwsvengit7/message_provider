@@ -28,6 +28,7 @@ public class AuthControllers {
     @PostMapping(REGISTER_URL)
     public ResponseEntity<ApiResponse<String, RegisterResponse>> createUserAuthentication(
             @RequestBody RegisterRequest registerRequest) {
+        System.out.println(registerRequest);
         return new ResponseEntity<>(registerService.authRegister(registerRequest), HttpStatus.CREATED);
     }
 
@@ -51,9 +52,8 @@ public class AuthControllers {
         return new ResponseEntity<>(otpService.verify_otp(otpRequest), HttpStatus.CREATED);
     }
 
-    @GetMapping(VERIFY_TOKEN)
-    public ResponseEntity<ApiResponse<String,String>> verify_token(HttpServletRequest httpServletRequest){
-        String authorization = httpServletRequest.getHeader("Authorization");
+    @GetMapping(VERIFY_TOKEN+"/{authorization}")
+    public ResponseEntity<ApiResponse<String,String>> verify_token(@PathVariable(name = "authorization") String authorization){
         return new ResponseEntity<>(authService.verify_token(authorization),HttpStatus.OK);
 
     }

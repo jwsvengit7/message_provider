@@ -9,6 +9,7 @@ import com.example.authmodule.domain.entity.Customer;
 import com.example.authmodule.domain.repository.values.interfaces.CustomerRepositoryValues;
 import com.example.authmodule.exceptions.CustomerNotFoundException;
 import com.example.authmodule.security.JwtService;
+import com.example.authmodule.web.config.annotation.InvokeDomain;
 import com.example.authmodule.web.services.interfaces.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,12 +30,13 @@ public class AuthServiceImplementation implements AuthService {
     private final JwtService jwtService;
 
     @Override
+    @InvokeDomain
     public ApiResponse<String, LoginResponse> authLogin(LoginRequest loginRequest) {
         Customer customer = customerRepositoryValues.findByEmail(loginRequest.getEmail())
                 .orElseThrow(()->new CustomerNotFoundException(CUSTOMER_NOT_FOUND));
         if(customerRepositoryValues.isActive(customer.getEmail()) && passwordEncoder.matches(loginRequest.getPassword(),customer.getPassword())){
             Authentication authentication = new UsernamePasswordAuthenticationToken(customer.getEmail(),customer.getPassword());
-            String jwtToken = jwtService.generateToken(authentication);
+            String jwtToken = jwtService.generateToken(authentication,customer.getRoles());
             String refreshtoken = jwtService.generateRefreshToken(authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return new ApiResponse<>(logginResponse(jwtToken,refreshtoken,customer),Registeration_Type.LOGIN_TYPE.name());
@@ -60,8 +62,12 @@ return LoginResponse.builder()
     }
 @Override
 public ApiResponse<String,String> verify_token(String token){
-        return ApiResponse.<String, String>builder().build();
-
+       String username  = jwtService.extractUsername(token);
+        return ApiResponse.<String, String>builder()
+                .message("Jwt Token")
+                .payload(username)
+                .message_response(username)
+                .build();
     }
     private CustomerDTO mappCustomertoDto(Customer customer){
         return CustomerDTO.builder()

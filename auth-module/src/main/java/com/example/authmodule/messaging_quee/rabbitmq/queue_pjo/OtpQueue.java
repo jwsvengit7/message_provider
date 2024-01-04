@@ -9,7 +9,17 @@ import lombok.*;
 @Getter
 @Setter
 public class OtpQueue {
+
     private String otp;
     private String email;
     private Registeration_Type type;
+
+    @Override
+    public String toString() {
+        return "OtpQueue{" +
+                "otp='" + otp + '\'' +
+                ", email='" + email + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }

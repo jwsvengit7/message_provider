@@ -66,7 +66,6 @@ public class OTPServiceImplementation implements OTPService {
                 .email(customer.getEmail())
                 .type(customer.getType())
                 .build();
-        log.info("{} ",otpQueue);
         rabbitmqService.sendRabbitmq_message(Exchange.OTP_EXCHANGE.name(), RoutingKey.OTP_QUEE.name(),otpQueue);
     }
     private void sendRabbitmqProfile(Customer customer){
