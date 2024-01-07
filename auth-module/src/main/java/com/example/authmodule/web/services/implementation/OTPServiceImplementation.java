@@ -8,6 +8,7 @@ import com.example.authmodule.domain.dto.request.ResendOTPRequest;
 import com.example.authmodule.domain.dto.response.ApiResponse;
 import com.example.authmodule.domain.entity.Customer;
 import com.example.authmodule.domain.entity.OTP;
+import com.example.authmodule.domain.repository.values.OTPRepository;
 import com.example.authmodule.domain.repository.values.interfaces.CustomerRepositoryValues;
 import com.example.authmodule.domain.repository.values.interfaces.OTPRepositoryValues;
 import com.example.authmodule.exceptions.CustomerNotFoundException;
@@ -33,7 +34,7 @@ import static com.example.authmodule.utils.Constant.*;
 @Slf4j
 @Getter
 public class OTPServiceImplementation implements OTPService {
-    private final OTPRepositoryValues otpRepositoryValues;
+    private final OTPRepository otpRepositoryValues;
     private final CustomerRepositoryValues customerRepositoryValues;
     private final ObjectMapper objectMapper;
     private final PasswordEncoder passwordEncoder;

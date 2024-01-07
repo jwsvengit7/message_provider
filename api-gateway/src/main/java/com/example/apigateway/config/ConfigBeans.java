@@ -14,21 +14,7 @@ public class ConfigBeans {
   public RestTemplate restTemplate(){
     return new RestTemplate();
   }
-////
-//        @Bean
-//        public RouteLocator routeLocator(RouteLocatorBuilder routeLocatorBuilder){
-//            return routeLocatorBuilder.routes()
-//                    .route(path-> path.path("/sms/**")
-//                            .filters(filterSpec->filterSpec.rewritePath("/sms/(?<segment>.*)","/${segment}"))
-//                            .uri("lb://PROFILE-MODULE"))
-//                    .route(path-> path.path("/sms/**")
-//                            .filters(filterSpec->filterSpec.rewritePath("/sms/(?<segment>.*)","/${segment}"))
-//                            .uri("lb://AUTH-MODULE"))
-//                    .route(path-> path.path("/sms/**")
-//                            .filters(filterSpec->filterSpec.rewritePath("/sms/(?<segment>.*)","/${segment}"))
-//                            .uri("lb://PAYMENT-MODULE"))
-//                    .build();
-//        }
+
 
   }
-//
+

@@ -40,12 +40,16 @@ public class JwtService {
         final HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("role",roles.name());
         hashMap.put("Company","SMS-PROVIDER");
+        hashMap.put("email", authentication.getName());
         return buildToken(hashMap, authentication, jwtExpiration);
     }
     public String generateRefreshToken(Authentication authentication) {
         return buildToken(new HashMap<>(), authentication, refreshExpiration);
     }
     private String buildToken(Map<String, Object> extraClaims,Authentication authentication, long expiration) {
+        if (extraClaims.containsKey("sub")) {
+            extraClaims.put("email", extraClaims.remove("sub"));
+        }
             return Jwts.builder()
                     .setClaims(extraClaims)
                     .setSubject(authentication.getName())

@@ -14,8 +14,7 @@
     <module>messenging-modules</module>
     <module>api-gateway</module>
     <module>profile-module</module>
-    <module>discovery-module</module>
     <module>config-server</module>
-    <module>payment-module</module>
+    <module>sms-service-discovery</module>
   </modules>
 </project>

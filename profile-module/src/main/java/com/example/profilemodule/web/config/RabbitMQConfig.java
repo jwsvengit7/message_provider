@@ -1,4 +1,4 @@
-package com.example.profilemodule.messaging.rabbitmq;
+package com.example.profilemodule.web.config;
 
 import com.example.profilemodule.domain.enums.Exchange;
 import com.example.profilemodule.domain.enums.QueueAmpq;

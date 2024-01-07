@@ -1,4 +1,4 @@
-package com.example.discoverymodule;
+package com.example.smsservicediscovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,9 +6,10 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
 @EnableEurekaServer
-public class DiscoveryModuleApplication {
+public class SmsServiceDiscoveryApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DiscoveryModuleApplication.class, args);
+        SpringApplication.run(SmsServiceDiscoveryApplication.class, args);
     }
+
 }

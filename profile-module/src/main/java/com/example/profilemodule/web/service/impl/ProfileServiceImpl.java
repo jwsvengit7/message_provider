@@ -2,8 +2,10 @@ package com.example.profilemodule.web.service.impl;
 
 import com.example.profilemodule.domain.dto.ProfileRequest;
 import com.example.profilemodule.domain.dto.ProfileRequestQueue;
+import com.example.profilemodule.domain.dto.response.BaseResponse;
 import com.example.profilemodule.domain.entity.AccountDetails;
 import com.example.profilemodule.domain.entity.Profile;
+import com.example.profilemodule.domain.enums.Roles;
 import com.example.profilemodule.domain.repository.ProfileRepository;
 import com.example.profilemodule.security.SecurityFilter;
 import com.example.profilemodule.web.service.interfaces.ProfileService;
@@ -43,12 +45,12 @@ public class ProfileServiceImpl implements ProfileService {
 
 
     private void recievedProfileFromqueue(ProfileRequestQueue profileRequestQueue){
-        String[] fullname = profileRequestQueue.getFullname().split(" ");
+        String[] fullName = profileRequestQueue.getFullname().split(" ");
 
         HashMap<String,String> userFullName = new HashMap<>();
-        if (fullname.length > 0) {
-            userFullName.put("Firstname",fullname[0]);
-            userFullName.put("LastName",fullname[fullname.length - 1]);
+        if (fullName.length > 0) {
+            userFullName.put("Firstname",fullName[0]);
+            userFullName.put("LastName",fullName[fullName.length - 1]);
         }
         Profile profile = save(profileRequestQueue,userFullName);
         profileRepository.insert(profile);
@@ -60,46 +62,65 @@ public class ProfileServiceImpl implements ProfileService {
                 .email(profileRequestQueue.getEmail())
                 .firstName(userFullName.get("Firstname"))
                 .lastName(userFullName.get("LastName"))
+                .roles(Roles.valueOf(profileRequestQueue.getRole()))
                 .identityNo(profileRequestQueue.getId())
                 .build();
     }
     @Override
-    public String updateProfile(ProfileRequest profileRequest, Long userId, HttpServletRequest request){
+    public BaseResponse<?> updateProfile(ProfileRequest profileRequest, Long userId, HttpServletRequest request){
+        BaseResponse baseResponse =new BaseResponse<>();
         if(validateRequestFromHeaders(request)) {
             Profile profile = profileRepository.findByIdentityNo(userId)
                     .orElseThrow(() -> new RuntimeException("User Not found"));
             if (!Objects.nonNull(profileRequest)) {
-                throw new RuntimeException("Object cant be null");
+                baseResponse.setData("Error Try again");
+                baseResponse.setStatusCode(-999);
+                return baseResponse;
             }
             profile.setFirstName(profileRequest.getFirstName());
             profile.setLastName(profileRequest.getLastname());
+            profile.setIdentityNo(userId);
             profile.setDob(profileRequest.getDob());
             profile.setBvn(profileRequest.getBvn());
-            List<AccountDetails> accountDetailsList = profileRequest.getAccountDetailsList().stream()
+            List<AccountDetails> accountDetailsList = profileRequest.getAccountDetailsList()
+                    .stream()
                     .map(account -> {
-                        return new AccountDetails(account.getAccountName(), account.getAccountNumber(), account.getBankName()); // Copying the AccountDetails assuming it's a class
+                        return  AccountDetails.builder()
+                                .accountName(account.getAccountName())
+                                .accountNumber(account.getAccountNumber())
+                                .bankName(account.getBankName()).build();
                     })
                     .collect(Collectors.toList());
             profile.setAccountDetails(accountDetailsList);
 
             profileRepository.save(profile);
-            return "Successfully Update profile";
+            baseResponse.setData("update successfully");
+            baseResponse.setStatusCode(200);
+            return baseResponse;
         }else{
-            throw new RuntimeException();
+            baseResponse.setData("Exception ");
+            baseResponse.setStatusCode(-999);
+            return baseResponse;
         }
     }
 
     @Cacheable(key = "#identityNo",value = "Profile")
-    public Profile getProfile(Long identityNo,HttpServletRequest httpServletRequest){
+    public BaseResponse<Profile> getProfile(Long identityNo,HttpServletRequest httpServletRequest){
+        BaseResponse baseResponse =new BaseResponse<>();
         if(validateRequestFromHeaders(httpServletRequest)) {
             Profile profile = profileRepository.findByIdentityNo(identityNo)
                     .orElseThrow(() -> new RuntimeException("User Not found"));
             if (!Objects.nonNull(profile)) {
                 throw new RuntimeException("Object cant be null");
             }
-            return profile;
+            baseResponse.setData(profile);
+            baseResponse.setStatusCode(-999);
+            return baseResponse;
+
         }else{
-            return new Profile();
+            baseResponse.setData("Error occurred");
+            baseResponse.setStatusCode(-999);
+            return baseResponse;
         }
     }
 

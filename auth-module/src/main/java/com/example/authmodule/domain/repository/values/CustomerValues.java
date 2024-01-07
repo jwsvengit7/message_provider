@@ -40,10 +40,6 @@ public  class CustomerValues implements CustomerRepositoryValues, OTPRepositoryV
         return customerRepository.existsByEmail(customer);
     }
 
-    @Override
-    public OTP save(OTP otp) {
-        return otpRepository.save(otp);
-    }
 
     @Override
     public Optional<OTP> findByCustomer(Customer customer) {

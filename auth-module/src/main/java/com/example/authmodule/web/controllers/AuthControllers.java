@@ -46,7 +46,7 @@ public class AuthControllers {
     }
 
     @Operation(description = "Verify user OTP")
-    @GetMapping(VERIFY_OTP)
+    @PostMapping(VERIFY_OTP)
     public ResponseEntity<ApiResponse<String, String>> verifyUserOTP(
             @RequestBody OTPRequest otpRequest) {
         return new ResponseEntity<>(otpService.verify_otp(otpRequest), HttpStatus.CREATED);
