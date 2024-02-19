@@ -28,6 +28,7 @@ public class AuthServiceImplementation implements AuthService {
     private final CustomerRepositoryValues customerRepositoryValues;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final MailServiceImpl mailService;
 
     @Override
     @InvokeDomain

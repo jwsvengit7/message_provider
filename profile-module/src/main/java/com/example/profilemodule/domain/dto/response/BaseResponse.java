@@ -2,7 +2,7 @@ package com.example.profilemodule.domain.dto.response;
 
 import lombok.*;
 
-@NoArgsConstructor
+
 @AllArgsConstructor
 @Builder
 @Getter
@@ -15,6 +15,10 @@ public class BaseResponse<T> {
         this.message = "resolve endpoints";
         this.statusCode=code;
         this.data=data;
+    }
+    public BaseResponse(){
+        this.message = "resolve endpoints";
+
     }
 
 }

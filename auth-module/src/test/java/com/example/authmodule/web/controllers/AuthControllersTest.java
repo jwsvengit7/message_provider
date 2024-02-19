@@ -1,5 +1,6 @@
 package com.example.authmodule.web.controllers;
 
+import com.example.authmodule.domain.constant.Registeration_Type;
 import com.example.authmodule.domain.constant.Roles;
 import com.example.authmodule.domain.dto.request.LoginRequest;
 import com.example.authmodule.domain.dto.request.OTPRequest;
@@ -13,6 +14,7 @@ import com.example.authmodule.web.services.interfaces.OTPService;
 import com.example.authmodule.web.services.interfaces.RegisterService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,17 +40,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = AuthControllers.class )
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 class AuthControllersTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private JwtAuthFilter jwtAuthenticationFilter;
-
     @MockBean
     private AuthService authService;
     @MockBean
     private RegisterService registerService;
-
 
     @MockBean
     private OTPService otpService;
@@ -78,15 +79,17 @@ class AuthControllersTest {
     @Test
     void createUserAuthentication() throws Exception {
         given(registerService.authRegister(request)).willAnswer((invocationOnMock -> {
-            RegisterRequest registerRequest =invocationOnMock.getArgument(0);
-            return new ApiResponse<>();
+            request =invocationOnMock.getArgument(0);
+            return new ApiResponse<>(responseFromUser, Registeration_Type.REGISTERATION_TYPE.name());
         }));
         ResultActions response = mockMvc.perform(post("/api/v1/auth/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));
-
+        log.info("*************- TEST ***************");
+        log.info("{}",CoreMatchers.is(registerService.authRegister(request).getPayload()));
+        log.info("*************- TEST ***************");
         response.andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.payload", CoreMatchers.is(registerService.authRegister(request))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.payload.email", CoreMatchers.is(registerService.authRegister(request).getPayload().getEmail())))
                 .andDo(MockMvcResultHandlers.print());
 
 

@@ -25,4 +25,13 @@ public class ApiResponse<T,K> {
         this.message=message;
         this.message_response = "Api recieved";
     }
+
+    @Override
+    public String toString() {
+        return "ApiResponse{" +
+                "message=" + message +
+                ", payload=" + payload +
+                ", message_response='" + message_response + '\'' +
+                '}';
+    }
 }

@@ -41,6 +41,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.jwsven</groupId>
+			<artifactId>mail_markets</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.11.5</version>

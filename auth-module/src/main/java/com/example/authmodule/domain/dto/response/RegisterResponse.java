@@ -14,6 +14,13 @@ public class RegisterResponse {
     private String message;
     private Roles roles;
 
-
-
+    @Override
+    public String toString() {
+        return "RegisterResponse{" +
+                "email='" + email + '\'' +
+                ", status='" + status + '\'' +
+                ", message='" + message + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }
