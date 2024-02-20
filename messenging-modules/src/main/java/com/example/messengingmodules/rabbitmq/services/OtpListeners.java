@@ -1,6 +1,5 @@
 package com.example.messengingmodules.rabbitmq.services;
 
-import com.example.messengingmodules.Queue.Rabbitmq;
 import com.example.messengingmodules.events.OtpEvents;
 import com.example.messengingmodules.rabbitmq.quee_request.OtpQueue;
 import lombok.RequiredArgsConstructor;

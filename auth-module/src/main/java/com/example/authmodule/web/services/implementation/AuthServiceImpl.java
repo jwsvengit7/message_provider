@@ -23,12 +23,12 @@ import static com.example.authmodule.utils.Constant.*;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AuthServiceImplementation implements AuthService {
+public class AuthServiceImpl implements AuthService {
 
     private final CustomerRepositoryValues customerRepositoryValues;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final MailServiceImpl mailService;
+   // private final com.jwsven.mail_markets.services.impl.MailServiceImpl mailService;
 
     @Override
     @InvokeDomain

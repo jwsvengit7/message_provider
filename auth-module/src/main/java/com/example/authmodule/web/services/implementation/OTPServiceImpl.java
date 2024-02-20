@@ -10,10 +10,8 @@ import com.example.authmodule.domain.entity.Customer;
 import com.example.authmodule.domain.entity.OTP;
 import com.example.authmodule.domain.repository.values.OTPRepository;
 import com.example.authmodule.domain.repository.values.interfaces.CustomerRepositoryValues;
-import com.example.authmodule.domain.repository.values.interfaces.OTPRepositoryValues;
 import com.example.authmodule.exceptions.CustomerNotFoundException;
 import com.example.authmodule.messaging_quee.rabbitmq.queue_pjo.OtpQueue;
-import com.example.authmodule.messaging_quee.rabbitmq.queue_pjo.ProfileRequestQueue;
 import com.example.authmodule.messaging_quee.rabbitmq.sender.RabbitmqService;
 import com.example.authmodule.utils.OtpUtils;
 import com.example.authmodule.web.services.interfaces.OTPService;
@@ -33,17 +31,25 @@ import static com.example.authmodule.utils.Constant.*;
 @RequiredArgsConstructor
 @Slf4j
 @Getter
-public class OTPServiceImplementation implements OTPService {
+public class OTPServiceImpl implements OTPService {
     private final OTPRepository otpRepositoryValues;
     private final CustomerRepositoryValues customerRepositoryValues;
     private final ObjectMapper objectMapper;
     private final PasswordEncoder passwordEncoder;
-    private final RabbitmqService rabbitmqService;
+    private final RabbitmqService<OtpQueue> rabbitmqService;
+    private final ProfileServiceImpl profileService;
 
     @Override
     public void sendotp_message(Customer customer, String otp){
         saveOtp(customer,otp);
-        sendRabbitmqOtp(customer,otp);
+        OtpQueue otpQueue = OtpQueue.builder()
+                .otp(otp)
+                .email(customer.getEmail())
+                .type(customer.getType())
+                .build();
+        System.out.println( RoutingKey.OTP_ROUTING_KEY.getRoutingKeyName());
+        System.out.println(Exchange.OTP_EXCHANGE.name());
+        rabbitmqService.sendRabbitmq_message(Exchange.OTP_EXCHANGE.name(), RoutingKey.OTP_ROUTING_KEY.getRoutingKeyName(),otpQueue);
     }
     private void saveOtp(Customer customer, String otp) {
         OTP saveOtp = otpRepositoryValues.findByCustomer(customer).orElse(null);
@@ -61,24 +67,8 @@ public class OTPServiceImplementation implements OTPService {
         }
     }
 
-    private void sendRabbitmqOtp(Customer customer,String otp){
-        OtpQueue otpQueue = OtpQueue.builder()
-                .otp(otp)
-                .email(customer.getEmail())
-                .type(customer.getType())
-                .build();
-        rabbitmqService.sendRabbitmq_message(Exchange.OTP_EXCHANGE.name(), RoutingKey.OTP_QUEE.name(),otpQueue);
-    }
-    private void sendRabbitmqProfile(Customer customer){
-        ProfileRequestQueue profileRequestQueue = ProfileRequestQueue.builder()
-                .role(customer.getRoles().name())
-                .fullname(customer.getFullname())
-                .id(customer.getId())
-                .email(customer.getEmail())
-                .build();
-        rabbitmqService.sendRabbitmq_message(Exchange.PROFILE_ACCESS.name(),RoutingKey.PROFILE_ACCESS.name(), profileRequestQueue);
 
-    }
+
     @Override
     public ApiResponse<String, String> verify_otp(OTPRequest otpRequest) {
         Customer customer = customerRepositoryValues.findByEmail(otpRequest.getEmail())
@@ -88,7 +78,7 @@ public class OTPServiceImplementation implements OTPService {
         if(!isValid(optUser)){
             customer.setStatus(true);
             customerRepositoryValues.save(customer);
-            sendRabbitmqProfile(customer);
+            profileService.sendRabbitmqProfile(customer);
             return new ApiResponse<>(customer.getEmail()+" User have been verified",Registeration_Type.OTP_SERVICE.name());
         }else{
             return new ApiResponse<>(INVLIAD_OTP,Registeration_Type.OTP_SERVICE.name());

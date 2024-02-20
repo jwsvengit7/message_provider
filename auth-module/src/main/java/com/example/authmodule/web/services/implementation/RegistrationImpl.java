@@ -17,17 +17,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 import static com.example.authmodule.utils.Constant.*;
 
 @Service
 @RequiredArgsConstructor
-public class RegisterationImplementation implements RegisterService {
+public class RegistrationImpl implements RegisterService {
     private final CustomerRepositoryValues customerRepositoryValues;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    private final OTPService otpServicel;
+    private final OTPService otpService;
 
     @Override
     @InvokeDomain
@@ -40,7 +38,7 @@ public class RegisterationImplementation implements RegisterService {
         }
         Customer saveCustomer = saveUser(registerRequest);
         String otp = OtpUtils.generateOtp();
-        otpServicel.sendotp_message(saveCustomer,otp);
+        otpService.sendotp_message(saveCustomer,otp);
         RegisterResponse save = modelMapper.map(saveCustomer, RegisterResponse.class);
         return new ApiResponse<>(save,Registeration_Type.REGISTERATION_TYPE.name());
     }
@@ -56,10 +54,6 @@ public class RegisterationImplementation implements RegisterService {
                 .status(false)
                 .build());
     }
-
-
-
-
 
 
 }

@@ -11,9 +11,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "customer_table")
+
 public class Customer{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(sequenceName = "CUSTOMER_TB",allocationSize = 1,initialValue = 1, name = "CUSTOMER_TB")
     private Long id;
     @Enumerated(EnumType.STRING)
     private Registeration_Type type;

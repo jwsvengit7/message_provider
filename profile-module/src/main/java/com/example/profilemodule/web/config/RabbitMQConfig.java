@@ -15,11 +15,15 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.profilemodule.utils.Utils.*;
+
 @Configuration
 public class RabbitMQConfig {
+
+
     @Bean
     public Queue queue() {
-        return new Queue(QueueAmpq.PROFILE_ACCESS.name(), true);
+        return new Queue(QueueAmpq.PROFILE_ACCESS.name(), DURABILITY);
     }
     @Bean
     public DirectExchange exchange() {
@@ -32,7 +36,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(RoutingKey.PROFILE_ACCESS);
+        return BindingBuilder.bind(queue).to(exchange).with(RoutingKey.PROFILE_ROUTING_KEY.getRoutingKeyName());
     }
 
     @Bean
@@ -46,8 +50,8 @@ public class RabbitMQConfig {
     public Queue retryQueue() {
         Map<String, Object> args = new HashMap<>();
         args.put("x-dead-letter-exchange", Exchange.PROFILE_ACCESS);
-        args.put("x-dead-letter-routing-key", RoutingKey.PROFILE_ACCESS.name());
+        args.put("x-dead-letter-routing-key", RoutingKey.PROFILE_ROUTING_KEY.getRoutingKeyName());
         args.put("x-message-ttl", 5000);
-        return new Queue(QueueAmpq.PROFILE_ACCESS.name(), true);
+        return new Queue(QueueAmpq.PROFILE_ACCESS.name(), DURABILITY);
     }
 }
