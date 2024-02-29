@@ -1,7 +1,6 @@
 package com.example.authmodule.web.services.implementation;
 
-import com.example.authmodule.domain.constant.Exchange;
-import com.example.authmodule.domain.constant.RoutingKey;
+import com.sms.smscommonsmodule.constant.*;
 import com.example.authmodule.domain.entity.Customer;
 import com.example.authmodule.messaging_quee.rabbitmq.queue_pjo.ProfileRequestQueue;
 import com.example.authmodule.messaging_quee.rabbitmq.sender.RabbitmqService;

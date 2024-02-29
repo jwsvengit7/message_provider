@@ -1,8 +1,8 @@
 package com.example.authmodule.web.services.interfaces;
 
-import com.example.authmodule.domain.dto.request.RegisterRequest;
-import com.example.authmodule.domain.dto.response.ApiResponse;
-import com.example.authmodule.domain.dto.response.RegisterResponse;
+import com.sms.smscommonsmodule.dto.request.RegisterRequest;
+import com.sms.smscommonsmodule.dto.response.ApiResponse;
+import com.sms.smscommonsmodule.dto.response.RegisterResponse;
 
 public interface RegisterService {
     ApiResponse<String, RegisterResponse> authRegister(RegisterRequest registerRequest);

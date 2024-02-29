@@ -1,8 +1,7 @@
 package com.example.authmodule.web.config;
 
-import com.example.authmodule.domain.constant.Exchange;
-import com.example.authmodule.domain.constant.QueueAmpq;
-import com.example.authmodule.domain.constant.RoutingKey;
+import com.sms.smscommonsmodule.constant.*;
+import com.sms.smscommonsmodule.constant.Exchange;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

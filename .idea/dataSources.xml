@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="microservice_school_portal@cluster.1pjyboz.mongodb.net" uuid="b24a22f2-cd7b-4069-adcd-b0ac0699ec06">
+    <data-source source="LOCAL" name="sms-profile@cluster.1pjyboz.mongodb.net" uuid="b24a22f2-cd7b-4069-adcd-b0ac0699ec06">
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
-      <jdbc-url>mongodb+srv://cluster.1pjyboz.mongodb.net/microservice_school_portal?retryWrites=true&amp;w=majority</jdbc-url>
+      <jdbc-url>mongodb+srv://cluster.1pjyboz.mongodb.net/sms-profile</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="access@localhost" uuid="fdf14092-139e-4c7e-b7ba-4a10106d237c">
+    <data-source source="LOCAL" name="@localhost" uuid="7d602da7-91fd-4ec6-b7c7-564e28b4066d">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/access</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="access@localhost" uuid="59810865-45b2-4ffb-8956-55a20c06ae1a">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5433/access</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

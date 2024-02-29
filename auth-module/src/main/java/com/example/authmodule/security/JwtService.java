@@ -1,7 +1,7 @@
 package com.example.authmodule.security;
 
 
-import com.example.authmodule.domain.constant.Roles;
+import com.sms.smscommonsmodule.constant.Roles;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

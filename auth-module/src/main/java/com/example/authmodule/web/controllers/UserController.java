@@ -1,8 +1,9 @@
 package com.example.authmodule.web.controllers;
 
-import com.example.authmodule.domain.dto.response.ApiResponse;
-import com.example.authmodule.domain.dto.response.CustomerDTO;
+
 import com.example.authmodule.web.services.interfaces.AuthService;
+import com.sms.smscommonsmodule.dto.response.ApiResponse;
+import com.sms.smscommonsmodule.dto.response.CustomerDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class UserController {
     private final AuthService authService;
 
     @GetMapping("{userId}")
-    public ResponseEntity<ApiResponse<String,CustomerDTO>> getUserById(@PathVariable("userId") Long userId){
+    public ResponseEntity<ApiResponse<String, CustomerDTO>> getUserById(@PathVariable("userId") Long userId){
         return new ResponseEntity<>(authService.findUserId(userId), HttpStatus.OK);
 
     }

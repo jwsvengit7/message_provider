@@ -1,7 +1,7 @@
 package com.example.authmodule.web.controllers;
 
-import com.example.authmodule.domain.dto.request.*;
-import com.example.authmodule.domain.dto.response.*;
+import com.sms.smscommonsmodule.dto.request.*;
+import com.sms.smscommonsmodule.dto.response.*;
 import com.example.authmodule.web.services.interfaces.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

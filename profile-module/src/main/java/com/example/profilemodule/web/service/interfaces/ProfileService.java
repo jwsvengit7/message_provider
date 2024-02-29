@@ -16,6 +16,6 @@ public interface ProfileService {
     @RabbitListener(queues = "PROFILE_ACCESS")
      void listeners(ProfileRequestQueue message);
 
-    BaseResponse<Profile> getProfile(Long identityNo,HttpServletRequest httpServletRequest);
+    BaseResponse<Object> getProfile(Long identityNo,HttpServletRequest httpServletRequest);
 
 }

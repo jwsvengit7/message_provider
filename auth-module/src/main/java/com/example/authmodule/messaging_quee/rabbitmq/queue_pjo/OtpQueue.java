@@ -1,6 +1,7 @@
 package com.example.authmodule.messaging_quee.rabbitmq.queue_pjo;
 
-import com.example.authmodule.domain.constant.Registeration_Type;
+
+import com.sms.smscommonsmodule.constant.Registeration_Type;
 import lombok.*;
 
 @Builder

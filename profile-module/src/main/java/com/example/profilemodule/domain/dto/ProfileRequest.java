@@ -10,6 +10,7 @@ public class ProfileRequest {
     private String username;
     private String lastname;
     private String firstName;
+    private String email;
     private String dob;
     private List<AccountDetails>  accountDetailsList;
     private Long bvn;

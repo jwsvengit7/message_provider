@@ -1,15 +1,13 @@
 package com.example.authmodule.web.services.implementation;
 
-import com.example.authmodule.domain.constant.Exchange;
-import com.example.authmodule.domain.constant.Registeration_Type;
-import com.example.authmodule.domain.constant.RoutingKey;
-import com.example.authmodule.domain.dto.request.OTPRequest;
-import com.example.authmodule.domain.dto.request.ResendOTPRequest;
-import com.example.authmodule.domain.dto.response.ApiResponse;
+import com.example.authmodule.domain.repository.CustomerRepository;
+import com.example.authmodule.domain.repository.OTPRepository;
+import com.sms.smscommonsmodule.constant.*;
+import com.sms.smscommonsmodule.dto.request.OTPRequest;
+import com.sms.smscommonsmodule.dto.request.ResendOTPRequest;
+import com.sms.smscommonsmodule.dto.response.ApiResponse;
 import com.example.authmodule.domain.entity.Customer;
 import com.example.authmodule.domain.entity.OTP;
-import com.example.authmodule.domain.repository.values.OTPRepository;
-import com.example.authmodule.domain.repository.values.interfaces.CustomerRepositoryValues;
 import com.example.authmodule.exceptions.CustomerNotFoundException;
 import com.example.authmodule.messaging_quee.rabbitmq.queue_pjo.OtpQueue;
 import com.example.authmodule.messaging_quee.rabbitmq.sender.RabbitmqService;
@@ -33,7 +31,7 @@ import static com.example.authmodule.utils.Constant.*;
 @Getter
 public class OTPServiceImpl implements OTPService {
     private final OTPRepository otpRepositoryValues;
-    private final CustomerRepositoryValues customerRepositoryValues;
+    private final CustomerRepository customerRepositoryValues;
     private final ObjectMapper objectMapper;
     private final PasswordEncoder passwordEncoder;
     private final RabbitmqService<OtpQueue> rabbitmqService;

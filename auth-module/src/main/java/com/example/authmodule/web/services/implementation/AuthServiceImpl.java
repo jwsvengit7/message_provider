@@ -1,12 +1,12 @@
 package com.example.authmodule.web.services.implementation;
 
-import com.example.authmodule.domain.constant.Registeration_Type;
-import com.example.authmodule.domain.dto.request.LoginRequest;
-import com.example.authmodule.domain.dto.response.ApiResponse;
-import com.example.authmodule.domain.dto.response.CustomerDTO;
-import com.example.authmodule.domain.dto.response.LoginResponse;
+import com.example.authmodule.domain.repository.CustomerRepository;
+import com.sms.smscommonsmodule.constant.Registeration_Type;
+import com.sms.smscommonsmodule.dto.request.LoginRequest;
+import com.sms.smscommonsmodule.dto.response.ApiResponse;
+import com.sms.smscommonsmodule.dto.response.CustomerDTO;
+import com.sms.smscommonsmodule.dto.response.LoginResponse;
 import com.example.authmodule.domain.entity.Customer;
-import com.example.authmodule.domain.repository.values.interfaces.CustomerRepositoryValues;
 import com.example.authmodule.exceptions.CustomerNotFoundException;
 import com.example.authmodule.security.JwtService;
 import com.example.authmodule.web.config.annotation.InvokeDomain;
@@ -25,17 +25,16 @@ import static com.example.authmodule.utils.Constant.*;
 @Slf4j
 public class AuthServiceImpl implements AuthService {
 
-    private final CustomerRepositoryValues customerRepositoryValues;
+    private final CustomerRepository customerRepositoryValues;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-   // private final com.jwsven.mail_markets.services.impl.MailServiceImpl mailService;
 
     @Override
     @InvokeDomain
     public ApiResponse<String, LoginResponse> authLogin(LoginRequest loginRequest) {
         Customer customer = customerRepositoryValues.findByEmail(loginRequest.getEmail())
                 .orElseThrow(()->new CustomerNotFoundException(CUSTOMER_NOT_FOUND));
-        if(customerRepositoryValues.isActive(customer.getEmail()) && passwordEncoder.matches(loginRequest.getPassword(),customer.getPassword())){
+        if(customerRepositoryValues.existsByEmail(customer.getEmail()) && passwordEncoder.matches(loginRequest.getPassword(),customer.getPassword())){
             Authentication authentication = new UsernamePasswordAuthenticationToken(customer.getEmail(),customer.getPassword());
             String jwtToken = jwtService.generateToken(authentication,customer.getRoles());
             String refreshtoken = jwtService.generateRefreshToken(authentication);
@@ -47,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ApiResponse<String, CustomerDTO> findUserId(Long userid) {
-        Customer customer = customerRepositoryValues.findByUserId(userid)
+        Customer customer = customerRepositoryValues.findById(userid)
                 .orElseThrow(()-> new CustomerNotFoundException(CUSTOMER_NOT_FOUND));
         return new ApiResponse<>(mappCustomertoDto(customer),Registeration_Type.USER_DETAILS.name());
     }

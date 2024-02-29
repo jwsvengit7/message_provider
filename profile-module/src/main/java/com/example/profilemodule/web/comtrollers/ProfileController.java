@@ -23,7 +23,7 @@ public class ProfileController {
     }
 
     @GetMapping("/{identityNo}")
-    public ResponseEntity<BaseResponse<Profile>> getProfileById(@Validated @PathVariable("identityNo")  Long identityNo,HttpServletRequest httpServletRequest){
+    public ResponseEntity<BaseResponse<Object>> getProfileById(@Validated @PathVariable("identityNo")  Long identityNo,HttpServletRequest httpServletRequest){
         return new ResponseEntity<>(profileService.getProfile(identityNo,httpServletRequest), HttpStatus.OK);
     }
 

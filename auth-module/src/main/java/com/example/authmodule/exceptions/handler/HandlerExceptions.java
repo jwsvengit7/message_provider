@@ -1,8 +1,8 @@
 package com.example.authmodule.exceptions.handler;
 
-import com.example.authmodule.domain.dto.response.ApiResponse;
 import com.example.authmodule.exceptions.CustomExceptionResponse;
 import com.example.authmodule.exceptions.CustomerNotFoundException;
+import com.sms.smscommonsmodule.dto.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
